@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<sub-flow name="postOrganizationsSubFlow" doc:id="307c5680-b7c9-4541-959e-56d2cbf3c136" >
+		<logger level="INFO" doc:name="Info: postorganizations start Logger" doc:id="012effab-edc0-4541-b1f4-a2a2afc4dae7" message="postorganizations flow started"/>
+		<ee:transform doc:name="Transform Message" doc:id="a93339ab-ddac-4a19-864b-fa87607cf766" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+    "orgName": payload.name,
+    "sfdcId": payload.sfdcId,
+    "message": "Organization Created",
+    "code": (payload.postalCode replace  "-" with "") as Number
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Info: postorganizations flow end Logger" doc:id="8558505b-b7c7-49dd-bda0-d7af2d7b8e10" message="post organizations flow ended"/>
+	</sub-flow>
+</mule>
